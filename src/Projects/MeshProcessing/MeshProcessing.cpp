@@ -12,6 +12,8 @@
 #include "CHOLMODSolver.hpp"
 #elif defined(LINSYSSOLVER_USE_AMGCL)
 #include "AMGCLSolver.hpp"
+#elif defined(LINSYSSOLVER_USE_SYMPILER)
+#include "SympilerSolver.hpp"
 #else
 #include "EigenLibSolver.hpp"
 #endif

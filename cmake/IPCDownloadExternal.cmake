@@ -88,6 +88,14 @@ function(download_cli11)
     )
 endfunction()
 
+# Sympiler Eigen
+function(download_sympiler_eigen)
+    custom_download_project(sympiler-eigen
+            GIT_REPOSITORY https://github.com/sympiler/sympiler-eigen.git
+            GIT_TAG        f44c2450676e5fe05503656ecb2f071ddcf78304
+            )
+endfunction()
+
 # Eigen Gurobi Wrapper
 function(download_eigen_gurobi)
   custom_download_project(eigen-gurobi

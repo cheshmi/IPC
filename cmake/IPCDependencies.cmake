@@ -85,6 +85,13 @@ if(NOT TARGET CLI11::CLI11)
   add_subdirectory(${IPC_EXTERNAL}/cli11)
 endif()
 
+# Sympiler-Eigen
+if(IPC_WITH_SYMPILER AND NOT TARGET SympilerEigen::SympilerEigen)
+  download_sympiler_eigen()
+  add_subdirectory(${IPC_EXTERNAL}/sympiler-eigen EXCLUDE_FROM_ALL)
+  add_library(SympilerEigen::SympilerEigen ALIAS sym_sparse_blas)
+endif()
+
 # eigen-gurobi
 if(IPC_WITH_GUROBI AND NOT TARGET EigenGurobi::EigenGurobi)
   download_eigen_gurobi()

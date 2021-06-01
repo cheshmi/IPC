@@ -14,6 +14,8 @@
 #include "CHOLMODSolver.hpp"
 #elif defined(LINSYSSOLVER_USE_AMGCL)
 #include "AMGCLSolver.hpp"
+#elif defined(LINSYSSOLVER_USE_SYMPILER)
+#include "SympilerSolver.hpp"
 #else
 #include "EigenLibSolver.hpp"
 #endif
@@ -186,6 +188,8 @@ void Energy<dim>::checkHessian(const Mesh<dim>& data, bool triplet) const
     linSysSolver = new CHOLMODSolver<Eigen::VectorXi, Eigen::VectorXd>();
 #elif defined(LINSYSSOLVER_USE_AMGCL)
     linSysSolver = new AMGCLSolver<Eigen::VectorXi, Eigen::VectorXd>();
+#elif defined(LINSYSSOLVER_USE_SYMPILER)
+                linSysSolver = new SympilerSolver<Eigen::VectorXi, Eigen::VectorXd>();
 #else
     linSysSolver = new EigenLibSolver<Eigen::VectorXi, Eigen::VectorXd>();
 #endif

@@ -30,11 +30,12 @@ option(IPC_WITH_EXACT_CCD "Use exact CCD as a verification"                    O
 option(IPC_WITH_FPRP      "Use exact floating-point CCD as a verification"     OFF)
 mark_as_advanced(IPC_WITH_FPRP)
 option(IPC_WITH_TESTS     "Build unit tests using Catch2"                       ON)
+option(IPC_WITH_SYMPILER    "Enable Sympiler Cholesky solver for Newton's method"             ON)
 option(IPC_WITH_GUROBI    "Enable Gurobi QP solver for SQP method"             OFF)
 option(IPC_WITH_OSQP_MKL  "Use MKL Pardiso linear solver in OSQP if available"  ON)
 option(IPC_WITH_OPENGL    "Use libgil viewer for preview and output"            ON)
-set(IPC_LINSYSSOLVER "CHOLMOD" CACHE STRING "Linear system solver to use (options: CHOLMOD, AMGCL, EIGEN)")
-set_property(CACHE IPC_LINSYSSOLVER PROPERTY STRINGS "CHOLMOD" "AMGCL" "EIGEN")
+set(IPC_LINSYSSOLVER "SYMPILER" CACHE STRING "Linear system solver to use (options: CHOLMOD, AMGCL, EIGEN)")
+set_property(CACHE IPC_LINSYSSOLVER PROPERTY STRINGS "CHOLMOD" "AMGCL" "SYMPILER" "EIGEN" )
 option(IPC_EXIT_UPON_QP_FAIL  "Exit if the QP/SQP intersects or blows-up" OFF)
 
 
@@ -75,7 +76,9 @@ file(GLOB SRCFILES
   "src/LinSysSolver/EigenLibSolver.cpp"
   "src/LinSysSolver/CHOLMODSolver.cpp"
   "src/LinSysSolver/AMGCLSolver.cpp"
+  "src/LinSysSolver/SympilerSolver.cpp"
   "src/TimeStepper/*.cpp"
+        "external/sympiler-eigen/sympiler_cholesky.cpp"
 )
 
 FOREACH(item ${SRCFILES})
@@ -158,6 +161,14 @@ target_link_libraries(${PROJECT_NAME}_dev PUBLIC spdlog::spdlog)
 # AMGCL
 target_link_libraries(${PROJECT_NAME}_dev PUBLIC amgcl::amgcl)
 
+# Sympiler
+target_link_directories( ${PROJECT_NAME}_dev PUBLIC /home/kazem/programs/metis-5.1.0/lib/)
+target_link_libraries(${PROJECT_NAME}_dev PUBLIC SympilerEigen::SympilerEigen)
+target_link_libraries(${PROJECT_NAME}_dev PUBLIC metis)
+target_include_directories(${PROJECT_NAME}_dev PUBLIC  external/sympiler-eigen/includes/
+        external/sympiler-eigen/sympiler/utils/includes/
+        external/sympiler-eigen/sympiler/sparse_blas/includes/parsy/
+        )
 # target_link_libraries(${PROJECT_NAME}_dev PUBLIC pardiso600-GNU720-X86-64 gfortran)
 # find_package(Pardiso)
 # if(PARDISO_FOUND)
@@ -276,6 +287,8 @@ if(IPC_LINSYSSOLVER STREQUAL "CHOLMOD")
   target_compile_definitions(${PROJECT_NAME}_dev PUBLIC LINSYSSOLVER_USE_CHOLMOD)
 elseif(IPC_LINSYSSOLVER STREQUAL "AMGCL")
   target_compile_definitions(${PROJECT_NAME}_dev PUBLIC LINSYSSOLVER_USE_AMGCL)
+elseif(IPC_LINSYSSOLVER STREQUAL "SYMPILER")
+  target_compile_definitions(${PROJECT_NAME}_dev PUBLIC LINSYSSOLVER_USE_SYMPILER)
 elseif(NOT (IPC_LINSYSSOLVER STREQUAL "EIGEN"))
   message(WARNING "Invalid linear system solver: ${IPC_LINSYSSOLVER}. Falling back to EIGEN.")
 endif()
