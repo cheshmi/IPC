@@ -47,6 +47,7 @@ if(NOT IPC_WITH_OPENGL)
   set(LIBIGL_WITH_PNG OFF CACHE BOOL "" FORCE)
 endif()
 
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 # debug-options
 
 ################################################################################

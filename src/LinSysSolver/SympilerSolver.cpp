@@ -4,6 +4,7 @@
 
 
 #include <vector>
+#include <thread>
 
 #include "SympilerSolver.hpp"
 
@@ -82,7 +83,8 @@ namespace IPC{
   //cholmod_free_factor(&L, &cm);
   //L = cholmod_analyze(A, &cm);
   delete sym_chol;
-  sym_chol = sympiler::sympiler_chol_symbolic(A);
+  const auto processor_count = std::thread::hardware_concurrency();
+  sym_chol = sympiler::sympiler_chol_symbolic(A, processor_count);
   //std::cout<<"\n*********************\n";
  }
 
