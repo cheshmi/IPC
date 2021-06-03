@@ -89,7 +89,7 @@ endif()
 if(IPC_WITH_SYMPILER AND NOT TARGET SympilerEigen::SympilerEigen)
   download_sympiler_eigen()
   add_subdirectory(${IPC_EXTERNAL}/sympiler-eigen EXCLUDE_FROM_ALL)
-  add_library(SympilerEigen::SympilerEigen ALIAS sym_sparse_blas)
+  add_library(SympilerEigen::SympilerEigen ALIAS sympiler_eigen)
 endif()
 
 # eigen-gurobi
