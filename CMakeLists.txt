@@ -78,7 +78,6 @@ file(GLOB SRCFILES
   "src/LinSysSolver/AMGCLSolver.cpp"
   "src/LinSysSolver/SympilerSolver.cpp"
   "src/TimeStepper/*.cpp"
-        "external/sympiler-eigen/sympiler_cholesky.cpp"
 )
 
 FOREACH(item ${SRCFILES})
@@ -162,9 +161,9 @@ target_link_libraries(${PROJECT_NAME}_dev PUBLIC spdlog::spdlog)
 target_link_libraries(${PROJECT_NAME}_dev PUBLIC amgcl::amgcl)
 
 # Sympiler
-target_link_directories( ${PROJECT_NAME}_dev PUBLIC /home/kazem/programs/metis-5.1.0/lib/)
+#target_link_directories( ${PROJECT_NAME}_dev PUBLIC /home/kazem/programs/metis-5.1.0/lib/)
 target_link_libraries(${PROJECT_NAME}_dev PUBLIC SympilerEigen::SympilerEigen)
-target_link_libraries(${PROJECT_NAME}_dev PUBLIC metis)
+# TODO: make it only one header
 target_include_directories(${PROJECT_NAME}_dev PUBLIC  external/sympiler-eigen/includes/
         external/sympiler-eigen/sympiler/utils/includes/
         external/sympiler-eigen/sympiler/sparse_blas/includes/parsy/
