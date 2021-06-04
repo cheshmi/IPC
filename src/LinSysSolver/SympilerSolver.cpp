@@ -83,7 +83,7 @@ namespace IPC{
   //cholmod_free_factor(&L, &cm);
   //L = cholmod_analyze(A, &cm);
   delete sym_chol;
-  const auto processor_count = std::thread::hardware_concurrency();
+  const auto processor_count = std::thread::hardware_concurrency()/2;
   sym_chol = sympiler::sympiler_chol_symbolic(A, processor_count);
   //std::cout<<"\n*********************\n";
  }
