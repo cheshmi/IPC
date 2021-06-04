@@ -92,7 +92,7 @@ endfunction()
 function(download_sympiler_eigen)
     custom_download_project(sympiler-eigen
             GIT_REPOSITORY https://github.com/sympiler/sympiler-eigen.git
-            GIT_TAG        4894540ad78f3094a3d98d93a1bf381d67d82a97
+            GIT_TAG        fd102ebc695490ffeed9026229d7c760db0ac079
             )
 endfunction()
 

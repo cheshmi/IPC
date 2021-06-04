@@ -163,7 +163,8 @@ target_link_libraries(${PROJECT_NAME}_dev PUBLIC amgcl::amgcl)
 
 # Sympiler
 #target_link_directories( ${PROJECT_NAME}_dev PUBLIC /home/kazem/programs/metis-5.1.0/lib/)
-target_link_libraries(${PROJECT_NAME}_dev PUBLIC SympilerEigen::SympilerEigen)
+link_directories( ${CMAKE_CURRENT_LIST_DIR}/external/sympiler-eigen/sympiler/lbc/lib/ )
+target_link_libraries(${PROJECT_NAME}_dev PUBLIC SympilerEigen::SympilerEigen )
 # TODO: make it only one header
 target_include_directories(${PROJECT_NAME}_dev PUBLIC  external/sympiler-eigen/includes/
         external/sympiler-eigen/sympiler/utils/includes/
